@@ -43,8 +43,8 @@ document.addEventListener('DOMContentLoaded', function () {
   document.addEventListener('DOMContentLoaded', () => {
     async function fetchData() {
       const api = {
-        url_oaa_queryimei: 'http://localhost:3333/api/oaa_queryimei',
-        // url_ora_cekstock: 'http://localhost:3333/ora_cekstock',
+        url_oaa_queryimei: 'http://localhost:3333/api/oaa-queryimei',
+        url_oaa_checkstock: 'http://localhost:3333/api/oaa-checkstock',
         // url_orl_createorder: 'http://localhost:3333/orl_createorder',
         // url_orl_deliveryorder: 'http://localhost:3333/orl_deliveryorder',
         // url_orl_getinvoice: 'http://localhost:3333/orl_getinvoice',
@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function () {
   
       const updateUI = (elementId, response) => {
         const rounded_number = round(response.avg, 3)
-        document.getElementById(elementId).innerHTML = rounded_number + " s";
+        document.getElementById(elementId).innerHTML = rounded_number + "s";
 
         let arrowIcon = '';
 
