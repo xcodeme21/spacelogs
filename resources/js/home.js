@@ -47,10 +47,7 @@ document.addEventListener('DOMContentLoaded', function () {
         url_oaa_checkstock: 'http://localhost:3333/api/oaa-checkstock',
         url_opp_item: 'http://localhost:3333/api/opp-item',
         url_opp_checkout: 'http://localhost:3333/api/opp-checkout',
-        // url_orl_deliveryorder: 'http://localhost:3333/orl_deliveryorder',
-        // url_orl_getinvoice: 'http://localhost:3333/orl_getinvoice',
-        // url_orl_cn: 'http://localhost:3333/orl_cn',
-        // url_orl_updateinventory: 'http://localhost:3333/orl_updateinventory'
+        url_kafka: 'http://localhost:3333/api/kafka',
       };
   
       const updateUI = (elementId, response) => {
@@ -89,6 +86,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   
     fetchData();
+    setInterval(fetchData, 5000);
     getDateTime();
   });
 
