@@ -14,5 +14,6 @@ router.get('/', [HomeController, 'index'])
 router.get('/api/oaa-queryimei', [HomeController, 'queryImei'])
 router.get('/api/oaa-checkstock', [HomeController, 'checkStock'])
 router.get('/api/opp-item', [HomeController, 'oppItem'])
+router.get('/api/opp-checkout', [HomeController, 'oppCheckout'])
 
 // router.on('/').render('pages/home')

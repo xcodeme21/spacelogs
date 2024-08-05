@@ -45,7 +45,8 @@ document.addEventListener('DOMContentLoaded', function () {
       const api = {
         url_oaa_queryimei: 'http://localhost:3333/api/oaa-queryimei',
         url_oaa_checkstock: 'http://localhost:3333/api/oaa-checkstock',
-        url_opp_item: 'http://localhost:3333/api/opp_item',
+        url_opp_item: 'http://localhost:3333/api/opp-item',
+        url_opp_checkout: 'http://localhost:3333/api/opp-checkout',
         // url_orl_deliveryorder: 'http://localhost:3333/orl_deliveryorder',
         // url_orl_getinvoice: 'http://localhost:3333/orl_getinvoice',
         // url_orl_cn: 'http://localhost:3333/orl_cn',

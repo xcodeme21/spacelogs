@@ -135,4 +135,40 @@ export default class HomeController {
             return response.status(500).send('Internal Server Error')
         }
     }
+
+    public async oppCheckout({ response }: HttpContext) {
+        try {
+            const tenMinutesAgo = DateTime.now().minus({ minutes: 10 }).toISO()
+
+            // Query the database
+            const list = await LogApiPos.query()
+                .select('id', 'status_code', 'response', 'duration', 'created_at')
+                .where('transaction_title', 'Simulate Promo Payment Level')
+                .andWhere('created_at', '>=', tenMinutesAgo)
+                .orderBy('id', 'desc')
+                .limit(100)
+
+            // Process data
+            const data = list.map((item) => ({
+                status_code: item.status_code,
+                response: item.response,
+                duration: this.miliToSecond(item.duration.toString()),
+            }))
+
+            // Calculate average duration
+            const avgDuration = data.length ? data.reduce((sum, item) => sum + item.duration, 0) / data.length : 0
+
+            const dataResponse = {
+                data,
+                avg: avgDuration,
+                table_name: 'log_api_pos',
+                transaction_title: 'Simulate Promo Payment Level'
+            }
+
+            return response.json(dataResponse)
+        } catch (error) {
+            console.error(error)
+            return response.status(500).send('Internal Server Error')
+        }
+    }
 }
