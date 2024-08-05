@@ -6,7 +6,8 @@
   <title>AdonisJS - A fully featured web framework for Node.js</title>
 
   <!-- Include Tailwind CSS -->
-  @vite(['resources/css/app.css', 'resources/js/app.js'])
+  @vite(['resources/css/app.css', 'resources/js/home.js'])
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
 </head>
 <body class="bg-gray-100">
 
@@ -85,37 +86,47 @@
             <!-- Card Body -->
             <div class="p-6">
               <div class="flex items-center">
-                  <div class="flex-1">
-                      <p class="text-2xl inline-flex items-center text-primary font-semibold">
-                         0.002s
-                      </p>
-                      <p class="text-sm text-gray-500 truncate dark:text-gray-400">
-                        Query Imei
-                      </p>
-                  </div>
-                  <div class="inline-flex items-center text-primary font-semibold">
-                    <button
-                      type="button"
-                      class="inline-block rounded bg-primary px-4 pb-[5px] pt-[6px] text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 motion-reduce:transition-none dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong">
-                      Detail
-                    </button>
-                  </div>
+                <div class="flex mr-2">
+                    <div id="div_oaa_queryimei_icon">
+                      <i class="fa fa-arrow-down fa-2x text-success" aria-hidden="true"></i>
+                    </div>
+                </div>
+                <div class="flex-1" id="id-oaa-queryimei">
+                    <p class="text-2xl inline-flex items-center text-success font-semibold" id="div_oaa_queryimei">
+                        0s
+                    </p>
+                    <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+                      Query Imei
+                    </p>
+                </div>
+                <div class="inline-flex items-center text-success font-semibold">
+                  <button
+                    type="button"
+                    class="inline-block rounded bg-primary px-4 pb-[5px] pt-[6px] text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 motion-reduce:transition-none dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong">
+                    <i class="fa fa-list" aria-hidden="true"></i> Detail
+                  </button>
+                </div>
               </div>
               <hr class="my-4">
               <div class="flex items-center">
+                <div class="flex mr-2">
+                    <p class="text-success font-semibold">
+                      <i class="fa fa-arrow-up fa-2x" aria-hidden="true"></i>
+                    </p>
+                </div>
                 <div class="flex-1">
-                    <p class="text-2xl inline-flex items-center text-primary font-semibold">
+                    <p class="text-2xl inline-flex items-center text-success font-semibold">
                         0.254s
                     </p>
                     <p class="text-sm text-gray-500 truncate dark:text-gray-400">
                       Check Stock
                     </p>
                 </div>
-                <div class="inline-flex items-center text-primary font-semibold">
+                <div class="inline-flex items-center text-success font-semibold">
                   <button
                     type="button"
                     class="inline-block rounded bg-primary px-4 pb-[5px] pt-[6px] text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 motion-reduce:transition-none dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong">
-                    Detail
+                    <i class="fa fa-list" aria-hidden="true"></i> Detail
                   </button>
                 </div>
               </div>
@@ -134,37 +145,47 @@
             <!-- Card Body -->
             <div class="p-6">
               <div class="flex items-center">
+                <div class="flex mr-2">
+                    <p class="text-danger font-semibold">
+                      <i class="fa fa-arrow-down fa-2x" aria-hidden="true"></i>
+                    </p>
+                </div>
                 <div class="flex-1">
-                    <p class="text-2xl inline-flex items-center text-primary font-semibold">
-                        0.222s
+                    <p class="text-2xl inline-flex items-center text-danger font-semibold">
+                        2.222s
                     </p>
                     <p class="text-sm text-gray-500 truncate dark:text-gray-400">
                       OPP Item
                     </p>
                 </div>
-                <div class="inline-flex items-center text-primary font-semibold">
+                <div class="inline-flex items-center text-success font-semibold">
                   <button
                     type="button"
                     class="inline-block rounded bg-primary px-4 pb-[5px] pt-[6px] text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 motion-reduce:transition-none dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong">
-                    Detail
+                    <i class="fa fa-list" aria-hidden="true"></i> Detail
                   </button>
                 </div>
               </div>
               <hr class="my-4">
               <div class="flex items-center">
+                <div class="flex mr-2">
+                    <p class="text-success font-semibold">
+                      <i class="fa fa-arrow-up fa-2x" aria-hidden="true"></i>
+                    </p>
+                </div>
                 <div class="flex-1">
-                    <p class="text-2xl inline-flex items-center text-primary font-semibold">
+                    <p class="text-2xl inline-flex items-center text-success font-semibold">
                         0.125s
                     </p>
                     <p class="text-sm text-gray-500 truncate dark:text-gray-400">
                       OPP Checkout
                     </p>
                 </div>
-                <div class="inline-flex items-center text-primary font-semibold">
+                <div class="inline-flex items-center text-success font-semibold">
                   <button
                     type="button"
                     class="inline-block rounded bg-primary px-4 pb-[5px] pt-[6px] text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 motion-reduce:transition-none dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong">
-                    Detail
+                    <i class="fa fa-list" aria-hidden="true"></i> Detail
                   </button>
                 </div>
               </div>
@@ -183,19 +204,24 @@
             <!-- Card Body -->
             <div class="p-6">
               <div class="flex items-center">
+                <div class="flex mr-2">
+                    <p class="text-success font-semibold">
+                      <i class="fa fa-arrow-up fa-2x" aria-hidden="true"></i>
+                    </p>
+                </div>
                 <div class="flex-1">
-                    <p class="text-2xl inline-flex items-center text-primary font-semibold">
+                    <p class="text-2xl inline-flex items-center text-success font-semibold">
                         0.763s
                     </p>
                     <p class="text-sm text-gray-500 truncate dark:text-gray-400">
                       Kafka
                     </p>
                 </div>
-                <div class="inline-flex items-center text-primary font-semibold">
+                <div class="inline-flex items-center text-success font-semibold">
                   <button
                     type="button"
                     class="inline-block rounded bg-primary px-4 pb-[5px] pt-[6px] text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 motion-reduce:transition-none dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong">
-                    Detail
+                    <i class="fa fa-list" aria-hidden="true"></i> Detail
                   </button>
                 </div>
               </div>
@@ -207,49 +233,7 @@
     </div>
   </div>
 
+  <script src="includes/home.js"></script>
 
-  <script>
-    // JavaScript to toggle the mobile menu visibility
-    document.addEventListener('DOMContentLoaded', function () {
-      const menuButton = document.getElementById('mobile-menu-button');
-      const mobileMenu = document.getElementById('mobile-menu');
-      const openIcon = menuButton.querySelector('svg:nth-of-type(1)');
-      const closeIcon = menuButton.querySelector('svg:nth-of-type(2)');
-
-      menuButton.addEventListener('click', function () {
-        // Toggle the 'hidden' class to show/hide the mobile menu
-        mobileMenu.classList.toggle('hidden');
-        // Toggle icon visibility
-        openIcon.classList.toggle('hidden');
-        closeIcon.classList.toggle('hidden');
-      });
-
-      // Optional: Hide mobile menu if clicked outside
-      document.addEventListener('click', function (event) {
-        if (!menuButton.contains(event.target) && !mobileMenu.contains(event.target)) {
-          mobileMenu.classList.add('hidden');
-          openIcon.classList.remove('hidden');
-          closeIcon.classList.add('hidden');
-        }
-      });
-    });
-
-     document.addEventListener('DOMContentLoaded', function () {
-      const button = document.getElementById('user-menu-button');
-      const dropdownMenu = document.getElementById('dropdown-menu');
-
-      button.addEventListener('click', function () {
-        // Toggle the 'hidden' class to show/hide the dropdown menu
-        dropdownMenu.classList.toggle('hidden');
-      });
-
-      // Optional: Hide dropdown if clicked outside of it
-      document.addEventListener('click', function (event) {
-        if (!button.contains(event.target) && !dropdownMenu.contains(event.target)) {
-          dropdownMenu.classList.add('hidden');
-        }
-      });
-    });
-  </script>
 </body>
 </html>

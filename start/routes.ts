@@ -8,5 +8,9 @@
 */
 
 import router from '@adonisjs/core/services/router'
+import HomeController from '#controllers/home_controller'
 
-router.on('/').render('pages/home')
+router.get('/', [HomeController, 'index'])
+router.get('/api/oaa_queryimei', [HomeController, 'queryImei'])
+
+// router.on('/').render('pages/home')
