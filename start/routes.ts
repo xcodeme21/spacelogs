@@ -13,5 +13,6 @@ import HomeController from '#controllers/home_controller'
 router.get('/', [HomeController, 'index'])
 router.get('/api/oaa-queryimei', [HomeController, 'queryImei'])
 router.get('/api/oaa-checkstock', [HomeController, 'checkStock'])
+router.get('/api/opp-item', [HomeController, 'oppItem'])
 
 // router.on('/').render('pages/home')
