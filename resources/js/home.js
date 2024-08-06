@@ -40,13 +40,27 @@ document.addEventListener('DOMContentLoaded', function () {
 })
 
 document.addEventListener('DOMContentLoaded', () => {
+  let isLoading = false;
+
   async function fetchData() {
+    if (isLoading) return;
+
+    isLoading = true;
+
     const api = {
       url_oaa_queryimei: 'http://localhost:3333/api/oaa-queryimei',
       url_oaa_checkstock: 'http://localhost:3333/api/oaa-checkstock',
       url_opp_item: 'http://localhost:3333/api/opp-item',
       url_opp_checkout: 'http://localhost:3333/api/opp-checkout',
       url_kafka: 'http://localhost:3333/api/kafka',
+    }
+
+    function updateClass(elementId, addClass, removeClass) {
+      var element = document.getElementById(elementId);
+      if (element) {
+        element.classList.remove(removeClass);
+        element.classList.add(addClass);
+      }
     }
 
     const updateUI = (elementId, response) => {
@@ -56,11 +70,14 @@ document.addEventListener('DOMContentLoaded', () => {
       let arrowIcon = ''
 
       if (rounded_number > 1) {
-        arrowIcon = '<i class="fa fa-arrow-up fa-2x text-danger" aria-hidden="true"></i>'
+        updateClass(elementId, 'text-danger', 'text-success');
+        updateClass(elementId + '_icon', 'text-danger', 'text-success');
+        updateClass(elementId + '_icon', 'fa-arrow-up', 'fa-arrow-down');
       } else {
-        arrowIcon = '<i class="fa fa-arrow-down fa-2x text-success" aria-hidden="true"></i>'
+        updateClass(elementId, 'text-success', 'text-danger');
+        updateClass(elementId + '_icon', 'text-success', 'text-danger');
+        updateClass(elementId + '_icon', 'fa-arrow-down', 'fa-arrow-up');
       }
-      document.getElementById(elementId + '_icon').innerHTML = arrowIcon
     }
 
     const round = (num, decimals) => {
@@ -82,12 +99,15 @@ document.addEventListener('DOMContentLoaded', () => {
       const elementId = key.replace('url_', 'div_')
       fetchDataFromAPI(value, elementId)
     }
+
+    isLoading = false;
   }
 
   fetchData()
-  setInterval(fetchData, 5000)
+  setInterval(fetchData, 10000)
   getDateTime()
 })
+
 
 async function getDateTime() {
   function updateTime() {

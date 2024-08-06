@@ -147,22 +147,19 @@ export default class HomeController {
     try {
       const tenMinutesAgo = DateTime.now().minus({ minutes: 10 }).toISO()
 
-      // Query the database
       const list = await LogApiPos.query()
-        .select('id', 'status_code', 'response', 'duration', 'created_at')
-        .where('transaction_title', 'Simulate Promo Payment Level')
-        .andWhere('created_at', '>=', tenMinutesAgo)
-        .orderBy('id', 'desc')
-        .limit(100)
+      .select('id', 'status_code', 'response', 'duration')
+      .where('transaction_title', 'Simulate Promo Payment Level')
+      .andWhere('created_at', '>=', tenMinutesAgo)
+      .orderBy('id', 'desc')
+      .limit(100);
 
-      // Process data
       const data = list.map((item) => ({
         status_code: item.status_code,
         response: item.response,
         duration: this.miliToSecond(item.duration.toString()),
       }))
 
-      // Calculate average duration
       const avgDuration = data.length
         ? data.reduce((sum, item) => sum + item.duration, 0) / data.length
         : 0
