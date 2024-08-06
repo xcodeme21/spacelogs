@@ -29,5 +29,5 @@
       "#start/*": ["./start/*.js"],
       "#config/*": ["./config/*.js"]
     }
-  },
+  }
 }

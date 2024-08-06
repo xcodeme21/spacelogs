@@ -22,7 +22,7 @@ body {
   color: rgb(0, 58, 119);
 }
 .text-danger {
-  color: rgb(235 33 40/var(--tw-bg-opacity));
+  color: rgb(235 33 40 / var(--tw-bg-opacity));
 }
 
 .text-success {
