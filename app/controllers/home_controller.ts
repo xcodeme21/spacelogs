@@ -1,4 +1,3 @@
-// import type { HttpContext } from '@adonisjs/core/http'
 import LogApi from '#models/log_api'
 import LogApiPos from '#models/log_api_pos'
 import LogApiPromo from '#models/log_api_promo'
@@ -8,7 +7,9 @@ import { DateTime } from 'luxon'
 
 export default class HomeController {
   public async index({ view }: HttpContext) {
-    return view.render('pages/home')
+    return view.render('pages/home', {
+      title: 'Home'
+    })
   }
 
   public async queryImei({ response }: HttpContext) {

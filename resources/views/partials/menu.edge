@@ -23,10 +23,18 @@
             </div>
             <div class="hidden sm:ml-6 sm:block">
               <div class="flex space-x-4">
-                <!-- Navigation Links -->
-                <a href="#" class="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white" aria-current="page">POS</a>
-                <a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">E-Commerce</a>
-                <a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Dealer Portal</a>
+                <a href="{{ route('home') }}"
+                  class="rounded-md {{ title === 'Home' ? 'bg-gray-900 text-white' : 'text-gray-300' }} px-3 py-2 text-sm font-medium"
+                  aria-current="page">POS
+                </a>
+
+                <a href="{{ route('e-commerce') }}"
+                  class="rounded-md {{ title === 'e-Commerce' ? 'bg-gray-900 text-white' : 'text-gray-300' }} px-3 py-2 text-sm font-medium hover:bg-gray-700 hover:text-white">E-Commerce
+                </a>
+
+                <a href="#"
+                  class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Dealer Portal
+                </a>
               </div>
             </div>
           </div>
