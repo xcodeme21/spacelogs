@@ -1,4 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Viga&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -18,13 +20,28 @@ body {
 .bg-primary {
   background-color: rgb(0, 58, 119);
 }
+
 .text-primary {
   color: rgb(0, 58, 119);
 }
+
 .text-danger {
   color: rgb(235 33 40 / var(--tw-bg-opacity));
 }
 
 .text-success {
   color: #41d001;
+}
+
+.logo {
+  font-family: 'Viga', sans-serif;
+  color: white;
+}
+
+.header-card {
+  font-family: 'Viga', sans-serif;
+}
+
+.sub-header-card {
+  font-family: 'Roboto', sans-serif;
 }
