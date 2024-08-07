@@ -63,44 +63,81 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
+    let fetchInterval;
+
     const showModal = async (tableName, title, intervalDuration = 10000) => {
       try {
         const fetchData = async () => {
           try {
             const response = await fetch(`/hit-count?transaction_title=${encodeURIComponent(title)}&table_name=${encodeURIComponent(tableName)}`);
             
-            if (!response.ok) {
-              throw new Error('Network response was not ok');
-            }
-        
+            if (!response.ok) throw new Error('Network response was not ok');
+            
             const data = await response.json();
             console.log(`Data fetched for ${title} in table ${tableName}:`, data);
         
             const modalElement = document.getElementById('myModal');
             const modalContent = document.getElementById('modalContent');
         
-            modalContent.innerHTML = data.map(item => `
-              <div>
-                <p class="text-lg font-semibold">Time Minute: ${item.timeMinute}</p>
-                <p class="text-sm text-gray-600">Ticks In Minute: ${item.ticksInMinute}</p>
-              </div>
-            `).join('');
+            modalContent.innerHTML = '<canvas id="myChart" class="w-full h-64"></canvas>';
+    
+            if (modalElement) modalElement.classList.remove('hidden');
         
-            if (modalElement) {
-              modalElement.classList.remove('hidden');
-            }
-        
+            const latestData = data.slice(-10);
+            const labels = latestData.map(item => item.timeMinute);
+            const ticksInMinute = latestData.map(item => item.ticksInMinute);
+    
+            new Chart(document.getElementById('myChart').getContext('2d'), {
+              type: 'line',
+              data: {
+                labels: labels,
+                datasets: [{
+                  label: 'Ticks In Minute',
+                  data: ticksInMinute,
+                  borderColor: 'rgba(75, 192, 192, 1)',
+                  backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                  borderWidth: 1
+                }]
+              },
+              options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                  x: { beginAtZero: true, title: { display: true, text: 'Time Minute' }},
+                  y: { beginAtZero: true, title: { display: true, text: 'Ticks In Minute' }}
+                }
+              }
+            });
+      
           } catch (error) {
             console.error('Error fetching data:', error);
           }
         };
-
+    
         await fetchData();
-        setInterval(fetchData, intervalDuration);
+        
+        if (fetchInterval) clearInterval(fetchInterval);
+        fetchInterval = setInterval(fetchData, intervalDuration);
         
       } catch (error) {
         console.error('Error in showModal:', error);
       }
+    };
+
+    const closeModal = () => {
+      const modal = document.getElementById('myModal');
+      if (modal) {
+        modal.classList.add('hidden');
+        if (fetchInterval) clearInterval(fetchInterval);
+      }
+    };
+
+    const modal = document.getElementById('myModal');
+    const closeModalButton = document.getElementById('closeModal');
+
+    if (closeModalButton) closeModalButton.onclick = closeModal;
+    window.onclick = (event) => {
+      if (event.target === modal) closeModal();
     };
 
 
