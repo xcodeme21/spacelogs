@@ -64,12 +64,17 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const updateUI = (elementId, response) => {
-      const rounded_number = round(response.avg, 3)
-      document.getElementById(elementId).innerHTML = rounded_number + 's'
+      const rounded_number = round(response.avg, 3);
+      document.getElementById(elementId).innerHTML = rounded_number + 's';
 
-      let arrowIcon = ''
+      let minimum = 1;
+      if(elementId === "div_opp_item" || elementId === "div_oaa_checkstock") {
+        minimum = 2;
+      } else {
+        minimum = 1;
+      }
 
-      if (rounded_number > 1) {
+      if (rounded_number > minimum) {
         updateClass(elementId, 'text-danger', 'text-success');
         updateClass(elementId + '_icon', 'text-danger', 'text-success');
         updateClass(elementId + '_icon', 'fa-arrow-up', 'fa-arrow-down');
