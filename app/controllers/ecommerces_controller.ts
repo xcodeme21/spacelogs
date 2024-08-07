@@ -50,7 +50,6 @@ export default class EcommercesController {
       try {
         const tenMinutesAgo = DateTime.now().minus({ minutes: 10 }).toISO()
   
-        // Query the database
         const list = await LogApiPromo.query()
           .select('id', 'status_code', 'response', 'duration', 'created_at')
           .where('transaction_title', 'promotionlistitem')
@@ -58,14 +57,12 @@ export default class EcommercesController {
           .orderBy('id', 'desc')
           .limit(100)
   
-        // Process data
         const data = list.map((item) => ({
           status_code: item.status_code,
           response: item.response,
           duration: miliToSecond(item.duration.toString()),
         }))
   
-        // Calculate average duration
         const avgDuration = data.length
           ? data.reduce((sum, item) => sum + item.duration, 0) / data.length
           : 0
