@@ -1,3 +1,4 @@
+import { miliToSecond } from "#helpers/durationHelper";
 import LogApi from "#models/log_api";
 import LogApiDealer from "#models/log_api_dealer";
 import { HttpContext } from "@adonisjs/core/http";
@@ -24,7 +25,7 @@ export default class DealerPortalsController {
         const data = list.map((item) => ({
           status_code: item.status_code,
           response: item.response,
-          duration: this.miliToSecond(item.duration.toString()),
+          duration: miliToSecond(item.duration.toString()),
         }))
   
         const avgDuration = data.length
@@ -45,27 +46,6 @@ export default class DealerPortalsController {
       }
     }
 
-    private miliToSecond(duration: string) {
-      let durationSecond = parseFloat(duration)
-  
-      if (duration.endsWith('ms')) {
-        durationSecond = parseFloat(duration) / 1000
-      } else if (duration.endsWith('m')) {
-        durationSecond = parseFloat(duration) * 60
-      } else {
-        const durationRaw = duration.split('.')
-  
-        durationSecond = parseFloat(durationRaw[0])
-  
-        if (durationRaw[0].includes('m')) {
-          const durationRawMinute = durationRaw[0].split('m')
-          durationSecond = parseFloat(durationRawMinute[0]) * 60 + parseFloat(durationRawMinute[1])
-        }
-      }
-  
-      return durationSecond
-    }
-
     public async oppItem({ response }: HttpContext) {
       try {
         const tenMinutesAgo = DateTime.now().minus({ minutes: 10 }).toISO()
@@ -82,7 +62,7 @@ export default class DealerPortalsController {
         const data = list.map((item) => ({
           status_code: item.status_code,
           response: item.response,
-          duration: this.miliToSecond(item.duration.toString()),
+          duration: miliToSecond(item.duration.toString()),
         }))
   
         // Calculate average duration
@@ -118,7 +98,7 @@ export default class DealerPortalsController {
         const data = list.map((item) => ({
           status_code: item.status_code,
           response: item.response,
-          duration: this.miliToSecond(item.duration.toString()),
+          duration: miliToSecond(item.duration.toString()),
         }))
   
         const avgDuration = data.length
