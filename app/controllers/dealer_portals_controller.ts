@@ -35,7 +35,7 @@ export default class DealerPortalsController {
         const dataResponse = {
           data,
           avg: avgDuration,
-          table_name: 'log_api',
+          table_name: 'LogApi',
           transaction_title: 'Asfa Check Stock',
         }
   
@@ -70,7 +70,7 @@ export default class DealerPortalsController {
         const dataResponse = {
           data,
           avg: avgDuration,
-          table_name: 'log_api',
+          table_name: 'LogApi',
           transaction_title: 'Dealer Portal Catalog Price Product',
         }
   
@@ -105,7 +105,7 @@ export default class DealerPortalsController {
         const dataResponse = {
           data,
           avg: avgDuration,
-          table_name: 'log_api_dealer',
+          table_name: 'LogApiDealer',
           transaction_title: 'Dealer Portal Get Outstanding AR',
         }
   

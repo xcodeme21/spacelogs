@@ -37,7 +37,7 @@ export default class HomeController {
       const dataResponse = {
         data,
         avg: avgDuration,
-        table_name: 'log_api_pos',
+        table_name: 'LogApiPos',
         transaction_title: 'oaaqueryimei',
       }
 
@@ -72,7 +72,7 @@ export default class HomeController {
       const dataResponse = {
         data,
         avg: avgDuration,
-        table_name: 'log_api_sync_product',
+        table_name: 'LogApiSyncProduct',
         transaction_title: 'stockquery',
       }
 
@@ -107,7 +107,7 @@ export default class HomeController {
       const dataResponse = {
         data,
         avg: avgDuration,
-        table_name: 'log_api_promo',
+        table_name: 'LogApiPromo',
         transaction_title: 'promotionlistitem',
       }
 
@@ -142,7 +142,7 @@ export default class HomeController {
       const dataResponse = {
         data,
         avg: avgDuration,
-        table_name: 'log_api_pos',
+        table_name: 'LogApiPos',
         transaction_title: 'Simulate Promo Payment Level',
       }
 
@@ -177,8 +177,44 @@ export default class HomeController {
       const dataResponse = {
         data,
         avg: avgDuration,
-        table_name: 'log_api',
+        table_name: 'LogApi',
         transaction_title: 'Trade Article by SKU - BuCode',
+      }
+
+      return response.json(dataResponse)
+    } catch (error) {
+      console.error(error)
+      return response.status(500).send('Internal Server Error')
+    }
+  }
+
+  public async getHitCount({ request, response }: HttpContext) {
+    try {
+      const tenMinutesAgo = DateTime.now().minus({ minutes: 10 }).toISO()
+      const transactionTitle = request.input('transaction_title')
+      const modelName = request.input('model_name')
+
+      const Model = (await import(`App/Models/${modelName}`)).default
+
+      const list = await Model.query()
+        .selectRaw('SUBSTRING(created_at, 1, 16) as Time_Minute, COUNT(*) as TicksInMinute')
+        .where('transaction_title', transactionTitle)
+        .where('created_at', '>=', tenMinutesAgo)
+        .groupBy('Time_Minute')
+
+      const data = list.map((item: { Time_Minute: any; TicksInMinute: any }) => ({
+        timeMinute: item.Time_Minute,
+        ticksInMinute: item.TicksInMinute,
+      }))
+
+      const avgTicksInMinute = data.length
+        ? data.reduce((sum: any, item: { ticksInMinute: any }) => sum + item.ticksInMinute, 0) / data.length
+        : 0
+
+      const dataResponse = {
+        data,
+        avg: avgTicksInMinute,
+        transaction_title: transactionTitle,
       }
 
       return response.json(dataResponse)

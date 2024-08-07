@@ -35,7 +35,7 @@ export default class EcommercesController {
         const dataResponse = {
           data,
           avg: avgDuration,
-          table_name: 'log_api_pos',
+          table_name: 'LogApiSyncProduct',
           transaction_title: 'stockquery',
         }
   
@@ -70,7 +70,7 @@ export default class EcommercesController {
         const dataResponse = {
           data,
           avg: avgDuration,
-          table_name: 'log_api_promo',
+          table_name: 'LogApiPromo',
           transaction_title: 'promotionlistitem',
         }
   
@@ -105,7 +105,7 @@ export default class EcommercesController {
         const dataResponse = {
           data,
           avg: avgDuration,
-          table_name: 'log_api_promo',
+          table_name: 'LogApiPromo',
           transaction_title: 'Simulate Promo Payment Level',
         }
   
