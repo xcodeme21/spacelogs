@@ -63,9 +63,46 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
+    const showModal = async (tableName, title) => {
+      try {
+        const response = await fetch(`/hit-count?transaction_title=${encodeURIComponent(title)}&table_name=${encodeURIComponent(tableName)}`);
+        
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+    
+        const data = await response.json();
+        console.log(`Data fetched for ${title} in table ${tableName}:`, data);
+    
+        const modalElement = document.getElementById('myModal');
+        const modalContent = document.getElementById('modalContent');
+    
+        modalContent.innerHTML = data.map(item => `
+          <div>
+            <p class="text-lg font-semibold">Time Minute: ${item.timeMinute}</p>
+            <p class="text-sm text-gray-600">Ticks In Minute: ${item.ticksInMinute}</p>
+          </div>
+        `).join('');
+    
+        if (modalElement) {
+          modalElement.classList.remove('hidden');
+        }
+    
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };    
+
     const updateUI = (elementId, response) => {
       const rounded_number = round(response.avg, 3);
       document.getElementById(elementId).innerHTML = rounded_number + 's';
+      const tableName = response.table_name;
+      const title = response.transaction_title;
+
+      const button = document.getElementById(elementId + '_btn');
+      if (button) {
+        button.onclick = () => showModal(tableName, title);
+      }
 
       let minimum = 1;
       if(elementId === "div_opp_item" || elementId === "div_oaa_checkstock") {
@@ -109,7 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   fetchData()
-  setInterval(fetchData, 10000)
+  //setInterval(fetchData, 10000)
   getDateTime()
 })
 
@@ -161,4 +198,21 @@ async function getDateTime() {
     document.getElementById('date_time_now').innerHTML = str
   }
   setInterval(updateTime, 500)
+}
+
+const modal = document.getElementById('myModal');
+const closeModalButton = document.getElementById('closeModal');
+
+if (closeModalButton) {
+  closeModalButton.onclick = () => {
+    if (modal) {
+      modal.classList.add('hidden');
+    }
+  }
+}
+
+window.onclick = (event) => {
+  if (event.target === modal) {
+    modal.classList.add('hidden');
+  }
 }

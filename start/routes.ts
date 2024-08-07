@@ -11,6 +11,7 @@ import router from '@adonisjs/core/services/router'
 import HomeController from '#controllers/home_controller'
 import EcommercesController from '#controllers/ecommerces_controller'
 import DealerPortalsController from '#controllers/dealer_portals_controller'
+import ModalsController from '#controllers/modals_controller'
 
 router.get('/', [HomeController, 'index']).as('home')
 router.get('/api/oaa-queryimei', [HomeController, 'queryImei'])
@@ -28,4 +29,6 @@ router.get('/dealer-portal', [DealerPortalsController, 'index']).as('dealer-port
 router.get('/api/dealer-portal/oaa-stockquery', [DealerPortalsController, 'stockQuery'])
 router.get('/api/dealer-portal/opp-item', [DealerPortalsController, 'oppItem'])
 router.get('/api/dealer-portal/outstanding-ar', [DealerPortalsController, 'outstandingAR'])
+
+router.get('/hit-count', [ModalsController, 'getHitCount'])
 // router.on('/').render('pages/home')

@@ -12,10 +12,10 @@
     "emitDecoratorMetadata": true,
     "skipLibCheck": true,
     "paths": {
-      "#controllers/*": ["./app/controllers/*.js"],
+      "#controllers/*": ["./app/controllers/*.ts"],
       "#exceptions/*": ["./app/exceptions/*.js"],
-      "#models/*": ["./app/models/*.js"],
-      "#helpers/*": ["./app/helpers/*.js"],
+      "#models/*": ["./app/models/*.ts"],
+      "#helpers/*": ["./app/helpers/*.ts"],
       "#mails/*": ["./app/mails/*.js"],
       "#services/*": ["./app/services/*.js"],
       "#listeners/*": ["./app/listeners/*.js"],
