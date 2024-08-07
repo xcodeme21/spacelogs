@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   fetchData()
-  setInterval(fetchData, 10000)
+  //setInterval(fetchData, 10000)
   getDateTime()
 })
 
