@@ -48,11 +48,9 @@ document.addEventListener('DOMContentLoaded', () => {
     isLoading = true;
 
     const api = {
-      url_oaa_queryimei: 'http://localhost:3333/api/oaa-queryimei',
-      url_oaa_checkstock: 'http://localhost:3333/api/oaa-checkstock',
-      url_opp_item: 'http://localhost:3333/api/opp-item',
-      url_opp_checkout: 'http://localhost:3333/api/opp-checkout',
-      url_kafka: 'http://localhost:3333/api/kafka',
+      url_oaa_stockquery: 'http://localhost:3333/api/dealer-portal/oaa-stockquery',
+      url_opp_item: 'http://localhost:3333/api/dealer-portal/opp-item',
+      url_outstanding_ar: 'http://localhost:3333/api/dealer-portal/outstanding-ar',
     }
 
     function updateClass(elementId, addClass, removeClass) {

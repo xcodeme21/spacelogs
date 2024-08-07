@@ -102,7 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   fetchData()
-  setInterval(fetchData, 15000)
+  setInterval(fetchData, 10000)
   getDateTime()
 })
 
@@ -153,5 +153,5 @@ async function getDateTime() {
       now.getSeconds()
     document.getElementById('date_time_now').innerHTML = str
   }
-  setInterval(updateTime, 1000)
+  setInterval(updateTime, 500)
 }
