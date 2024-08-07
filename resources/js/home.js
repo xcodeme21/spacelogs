@@ -63,35 +63,46 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    const showModal = async (tableName, title) => {
+    const showModal = async (tableName, title, intervalDuration = 10000) => {
       try {
-        const response = await fetch(`/hit-count?transaction_title=${encodeURIComponent(title)}&table_name=${encodeURIComponent(tableName)}`);
+        const fetchData = async () => {
+          try {
+            const response = await fetch(`/hit-count?transaction_title=${encodeURIComponent(title)}&table_name=${encodeURIComponent(tableName)}`);
+            
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
         
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-    
-        const data = await response.json();
-        console.log(`Data fetched for ${title} in table ${tableName}:`, data);
-    
-        const modalElement = document.getElementById('myModal');
-        const modalContent = document.getElementById('modalContent');
-    
-        modalContent.innerHTML = data.map(item => `
-          <div>
-            <p class="text-lg font-semibold">Time Minute: ${item.timeMinute}</p>
-            <p class="text-sm text-gray-600">Ticks In Minute: ${item.ticksInMinute}</p>
-          </div>
-        `).join('');
-    
-        if (modalElement) {
-          modalElement.classList.remove('hidden');
-        }
-    
+            const data = await response.json();
+            console.log(`Data fetched for ${title} in table ${tableName}:`, data);
+        
+            const modalElement = document.getElementById('myModal');
+            const modalContent = document.getElementById('modalContent');
+        
+            modalContent.innerHTML = data.map(item => `
+              <div>
+                <p class="text-lg font-semibold">Time Minute: ${item.timeMinute}</p>
+                <p class="text-sm text-gray-600">Ticks In Minute: ${item.ticksInMinute}</p>
+              </div>
+            `).join('');
+        
+            if (modalElement) {
+              modalElement.classList.remove('hidden');
+            }
+        
+          } catch (error) {
+            console.error('Error fetching data:', error);
+          }
+        };
+
+        await fetchData();
+        setInterval(fetchData, intervalDuration);
+        
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error('Error in showModal:', error);
       }
-    };    
+    };
+
 
     const updateUI = (elementId, response) => {
       const rounded_number = round(response.avg, 3);
@@ -146,7 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   fetchData()
-  //setInterval(fetchData, 10000)
+  setInterval(fetchData, 10000)
   getDateTime()
 })
 
