@@ -39,6 +39,7 @@
                 </div>
                 <div class="inline-flex items-center text-success font-semibold">
                   <button
+                    id="div_oaa_stockquery_btn"
                     type="button"
                     class="inline-block rounded bg-primary px-4 pb-[5px] pt-[6px] text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-gray-500 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 motion-reduce:transition-none dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong">
                     <i class="fa fa-list" aria-hidden="true"></i> Detail
@@ -79,6 +80,7 @@
                 </div>
                 <div class="inline-flex items-center text-success font-semibold">
                   <button
+                    id="div_opp_item_btn"
                     type="button"
                     class="inline-block rounded bg-primary px-4 pb-[5px] pt-[6px] text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-gray-500 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 motion-reduce:transition-none dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong">
                     <i class="fa fa-list" aria-hidden="true"></i> Detail
@@ -119,6 +121,7 @@
                 </div>
                 <div class="inline-flex items-center text-success font-semibold">
                   <button
+                    id="div_outstanding_ar_btn"
                     type="button"
                     class="inline-block rounded bg-primary px-4 pb-[5px] pt-[6px] text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-gray-500 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 motion-reduce:transition-none dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong">
                     <i class="fa fa-list" aria-hidden="true"></i> Detail
@@ -132,6 +135,22 @@
       </div>
     </div>
   </div>
+
+  <div id="myModal" class="fixed inset-0 z-50 hidden bg-gray-900 bg-opacity-50 flex items-center justify-center">
+    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-4xl h-3xl max-h-screen overflow-auto">
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-xl font-semibold" id="modalTitle">Modal Title</h2>
+            <button class="text-gray-500 hover:text-gray-700" id="closeModal">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+        <div id="modalContent" class="h-full"></div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 </body>
 </html>

@@ -1,162 +1,137 @@
 document.addEventListener('DOMContentLoaded', function () {
-  const menuButton = document.getElementById('mobile-menu-button')
-  const mobileMenu = document.getElementById('mobile-menu')
-  const openIcon = menuButton.querySelector('svg:nth-of-type(1)')
-  const closeIcon = menuButton.querySelector('svg:nth-of-type(2)')
+  let fetchInterval;
+  
+  const modal = document.getElementById('myModal');
+  const closeModalButton = document.getElementById('closeModal');
+  const overlay = document.createElement('div');
+  overlay.id = 'overlay';
+  document.body.appendChild(overlay);
 
-  menuButton.addEventListener('click', function () {
-    // Toggle the 'hidden' class to show/hide the mobile menu
-    mobileMenu.classList.toggle('hidden')
-    // Toggle icon visibility
-    openIcon.classList.toggle('hidden')
-    closeIcon.classList.toggle('hidden')
-  })
+  const showModal = async (tableName, title, elementId, intervalDuration = 10000) => {
+    overlay.style.display = 'block';
+    try {
+      const response = await fetch(`/hit-count?transaction_title=${encodeURIComponent(title)}&table_name=${encodeURIComponent(tableName)}`);
+      if (!response.ok) throw new Error('Network response was not ok');
+      const data = await response.json();
 
-  // Optional: Hide mobile menu if clicked outside
-  document.addEventListener('click', function (event) {
-    if (!menuButton.contains(event.target) && !mobileMenu.contains(event.target)) {
-      mobileMenu.classList.add('hidden')
-      openIcon.classList.remove('hidden')
-      closeIcon.classList.add('hidden')
+      const modalTitle = {
+        div_oaa_stockquery: 'OAA Stock Query',
+        div_opp_item: 'OPP Item',
+        div_outstanding_ar: 'Outstanding AR',
+      }[elementId] || elementId;
+
+      document.getElementById("modalTitle").innerHTML = modalTitle;
+      document.getElementById("modalContent").innerHTML = '<canvas id="myChart" class="w-full h-64"></canvas>';
+
+      if (modal) modal.classList.remove('hidden');
+
+      const latestData = data.slice(-10);
+      const labels = latestData.map(item => item.timeMinute);
+      const ticksInMinute = latestData.map(item => item.ticksInMinute);
+
+      new Chart(document.getElementById('myChart').getContext('2d'), {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Ticks In Minute',
+            data: ticksInMinute,
+            borderColor: 'rgba(75, 192, 192, 1)',
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            borderWidth: 1,
+          }],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: { beginAtZero: true, title: { display: true, text: 'Time Minute' } },
+            y: { beginAtZero: true, title: { display: true, text: 'Ticks In Minute' } },
+          },
+        },
+      });
+
+      if (fetchInterval) clearInterval(fetchInterval);
+      fetchInterval = setInterval(() => showModal(tableName, title, elementId, intervalDuration), intervalDuration);
+    } catch (error) {
+      console.error('Error in showModal:', error);
     }
-  })
-})
+  };
 
-document.addEventListener('DOMContentLoaded', function () {
-  const button = document.getElementById('user-menu-button')
-  const dropdownMenu = document.getElementById('dropdown-menu')
-
-  button.addEventListener('click', function () {
-    // Toggle the 'hidden' class to show/hide the dropdown menu
-    dropdownMenu.classList.toggle('hidden')
-  })
-
-  // Optional: Hide dropdown if clicked outside of it
-  document.addEventListener('click', function (event) {
-    if (!button.contains(event.target) && !dropdownMenu.contains(event.target)) {
-      dropdownMenu.classList.add('hidden')
+  const closeModal = () => {
+    if (modal) {
+      modal.classList.add('hidden');
+      overlay.style.display = 'none';
+      if (fetchInterval) clearInterval(fetchInterval);
     }
-  })
-})
+  };
 
-document.addEventListener('DOMContentLoaded', () => {
-  let isLoading = false;
-
-  async function fetchData() {
-    if (isLoading) return;
-
-    isLoading = true;
-
-    const api = {
-      url_oaa_stockquery: 'http://localhost:3333/api/dealer-portal/oaa-stockquery',
-      url_opp_item: 'http://localhost:3333/api/dealer-portal/opp-item',
-      url_outstanding_ar: 'http://localhost:3333/api/dealer-portal/outstanding-ar',
-    }
-
-    function updateClass(elementId, addClass, removeClass) {
-      var element = document.getElementById(elementId);
-      if (element) {
-        element.classList.remove(removeClass);
-        element.classList.add(addClass);
-      }
-    }
-
-    const updateUI = (elementId, response) => {
-      const rounded_number = round(response.avg, 3)
-      document.getElementById(elementId).innerHTML = rounded_number + 's';
-
-      let minimum = 1;
-      if(elementId === "div_opp_item" || elementId === "div_outstanding_ar") {
-        minimum = 2;
-      } else {
-        minimum = 1;
-      }
-
-      if (rounded_number > minimum) {
-        updateClass(elementId, 'text-danger', 'text-success');
-        updateClass(elementId + '_icon', 'text-danger', 'text-success');
-        updateClass(elementId + '_icon', 'fa-arrow-up', 'fa-arrow-down');
-      } else {
-        updateClass(elementId, 'text-success', 'text-danger');
-        updateClass(elementId + '_icon', 'text-success', 'text-danger');
-        updateClass(elementId + '_icon', 'fa-arrow-down', 'fa-arrow-up');
-      }
-    }
-
-    const round = (num, decimals) => {
-      const factor = Math.pow(10, decimals)
-      return Math.round(num * factor) / factor
-    }
-
-    const fetchDataFromAPI = async (url, elementId) => {
-      try {
-        const response = await fetch(url)
-        const data = await response.json()
-        updateUI(elementId, data)
-      } catch (error) {
-        console.error('Error fetching data:', error)
-      }
-    }
-
-    for (let [key, value] of Object.entries(api)) {
-      const elementId = key.replace('url_', 'div_')
-      fetchDataFromAPI(value, elementId)
-    }
-
-    isLoading = false;
+  if (closeModalButton) {
+    closeModalButton.onclick = closeModal;
   }
 
-  fetchData()
-  setInterval(fetchData, 10000)
-  getDateTime()
-})
+  overlay.onclick = (event) => {
+    if (event.target === overlay) {
+      closeModal();
+    }
+  };
 
+  const updateClass = (elementId, addClass, removeClass) => {
+    const element = document.getElementById(elementId);
+    if (element) {
+      element.classList.remove(removeClass);
+      element.classList.add(addClass);
+    }
+  };
 
-async function getDateTime() {
-  function updateTime() {
-    var str = ''
+  const updateUI = (elementId, response) => {
+    const rounded_number = round(response.avg, 3);
+    document.getElementById(elementId).innerHTML = rounded_number + 's';
+    const tableName = response.table_name;
+    const title = response.transaction_title;
 
-    var days = new Array(
-      'Sunday',
-      'Monday',
-      'Tuesday',
-      'Wednesday',
-      'Thursday',
-      'Friday',
-      'Saturday'
-    )
-    var months = new Array(
-      'January',
-      'February',
-      'March',
-      'April',
-      'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November',
-      'December'
-    )
+    const button = document.getElementById(elementId + '_btn');
+    if (button) {
+      button.onclick = () => showModal(tableName, title, elementId);
+    }
 
-    var now = new Date()
+    const minimum = ["div_opp_item", "div_oaa_checkstock"].includes(elementId) ? 2 : 1;
 
-    str +=
-      days[now.getDay()] +
-      ', ' +
-      now.getDate() +
-      ' ' +
-      months[now.getMonth()] +
-      ' ' +
-      now.getFullYear() +
-      ' ' +
-      now.getHours() +
-      ':' +
-      now.getMinutes() +
-      ':' +
-      now.getSeconds()
-    document.getElementById('date_time_now').innerHTML = str
+    if (rounded_number > minimum) {
+      updateClass(elementId, 'text-danger', 'text-success');
+      updateClass(elementId + '_icon', 'text-danger', 'text-success');
+      updateClass(elementId + '_icon', 'fa-arrow-up', 'fa-arrow-down');
+    } else {
+      updateClass(elementId, 'text-success', 'text-danger');
+      updateClass(elementId + '_icon', 'text-success', 'text-danger');
+      updateClass(elementId + '_icon', 'fa-arrow-down', 'fa-arrow-up');
+    }
+  };
+
+  const round = (num, decimals) => {
+    const factor = Math.pow(10, decimals);
+    return Math.round(num * factor) / factor;
+  };
+
+  const fetchDataFromAPI = async (url, elementId) => {
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      updateUI(elementId, data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  const api = {
+    url_oaa_stockquery: '/api/dealer-portal/oaa-stockquery',
+    url_opp_item: '/api/dealer-portal/opp-item',
+    url_outstanding_ar: '/api/dealer-portal/outstanding-ar',
+  };
+
+  for (const [key, value] of Object.entries(api)) {
+    const elementId = key.replace('url_', 'div_');
+    fetchDataFromAPI(value, elementId);
+    setInterval(() => fetchDataFromAPI(value, elementId), 10000);
   }
-  setInterval(updateTime, 500)
-}
+});
