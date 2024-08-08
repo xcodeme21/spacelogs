@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
   overlay.id = 'overlay';
   document.body.appendChild(overlay);
 
-  const showModal = async (tableName, title, elementId, intervalDuration = 10000) => {
+  const showModal = async (tableName, title, elementId, intervalDuration = 60000) => {
     overlay.style.display = 'block';
     try {
       const response = await fetch(`/hit-count?transaction_title=${encodeURIComponent(title)}&table_name=${encodeURIComponent(tableName)}`);
@@ -132,6 +132,6 @@ document.addEventListener('DOMContentLoaded', function () {
   for (const [key, value] of Object.entries(api)) {
     const elementId = key.replace('url_', 'div_');
     fetchDataFromAPI(value, elementId);
-    setInterval(() => fetchDataFromAPI(value, elementId), 10000);
+    setInterval(() => fetchDataFromAPI(value, elementId), 60000);
   }
 });

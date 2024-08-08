@@ -1,6 +1,6 @@
-import User from '#models/user'
+
 import type { HttpContext } from '@adonisjs/core/http'
-import hash from '@adonisjs/core/services/hash';
+import axios from 'axios';
 
 export default class LoginController {
     public async index({ view }: HttpContext) {
@@ -9,32 +9,49 @@ export default class LoginController {
       })
     }
 
-    async login({ request, response, session }: HttpContext) {
+    public async login({ request, response }: HttpContext) {
       const { email, password } = request.only(['email', 'password']);
-    
-      const user = await User.findBy('email', email);
-    
-      if (!user) {
-        session.put('error', "Email not found.");
-        return response.redirect('login');
-      }
-    
-      const hashedPassword = user.password;
-    
-      console.log(password, hashedPassword)
+  
       try {
-        const isPasswordValid = await hash.verify(password, hashedPassword);
-    
-        if (!isPasswordValid) {
-          session.put('error', "Incorrect password.");
-          return response.redirect('login');
+        const apiResponse = await axios.post(
+          'https://kong.eratech.id/auth/v1/cms/auth/login',
+          {
+            username: email,
+            password: password,
+          },
+          {
+            headers: {
+              'accept': 'application/json, text/plain, */*',
+              'content-type': 'application/json',
+              'origin': 'https://cs-dashboard.eratech.id',
+              'x-project': 'dashboard',
+            },
+          }
+        );
+  
+        if (apiResponse.data && apiResponse.data.data && apiResponse.data.data.access_token) {
+          const token = apiResponse.data.data.access_token;
+  
+          response.cookie('auth_token', token, {
+            httpOnly: true,
+            secure: true, 
+            sameSite: true,
+          });
+  
+          return response.json({
+            message: 'Login successful',
+            token: token,
+          });
+        } else {
+          return response.status(401).json({
+            error: 'Login failed. Invalid response from the authentication server.',
+          });
         }
-    
-        return response.redirect('/dashboard');
-      } catch (err) {
-        console.error('Error verifying password:', err);
-        session.put('error', "An error occurred.");
-        return response.redirect('login');
+      } catch (error) {
+        return response.status(401).json({
+          error: 'Login failed. Please check your credentials and try again.',
+          details: error.response ? error.response.data : error.message,
+        });
       }
     }
 }

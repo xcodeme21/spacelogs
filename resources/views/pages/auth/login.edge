@@ -10,22 +10,27 @@
             <form id="login-form" action="{{ route('login.post') }}" method="POST">
                 {{ csrfField() }}
                 <div>
-                  <label class="block mb-2 text-indigo-500" for="email">Email</label>
-                  <input class="w-full p-2 mb-6 text-primary border-b-2 border-indigo-500 outline-none focus:bg-gray-300" type="email" name="email" autofocus="true" required>
+                    <label class="block mb-2 text-indigo-500" for="email">Email</label>
+                    <input class="w-full p-2 mb-6 text-primary border-b-2 border-indigo-500 outline-none focus:bg-gray-300" 
+                           type="email" name="email" autofocus="true" required>
                 </div>
                 <div>
-                  <label class="block mb-2 text-indigo-500" for="password">Password</label>
-                  <input class="w-full p-2 mb-6 text-primary border-b-2 border-indigo-500 outline-none focus:bg-gray-300" type="password" name="password" required>
+                    <label class="block mb-2 text-indigo-500" for="password">Password</label>
+                    <input class="w-full p-2 mb-6 text-primary border-b-2 border-indigo-500 outline-none focus:bg-gray-300" 
+                           type="password" name="password" required>
                 </div>
                 <div>          
-                  <button class="w-full cursor-pointer bg-primary hover:bg-indigo-700 text-white font-bold py-2 px-4 mb-6 rounded" type="submit">Login</button>
-                  @if(session.get('error'))
-                    <p class="text-sm text-danger mb-2 -mt-2" id="error">{{ session.get('error') }}</p>
-                  @endif
-                  <a href="/" class="text-primary hover:text-gray-500 text-md" type="submit"><i class="fa fa-arrow-left"></i> Back</a>
+                    <button class="w-full cursor-pointer bg-primary hover:bg-indigo-700 text-white font-bold py-2 px-4 mb-6 rounded" 
+                            type="submit">Login</button>
+                    <p class="text-sm text-danger text-center mb-2 -mt-2" id="error"></p>
+                    <a href="/" class="text-primary hover:text-gray-500 text-md" type="submit">
+                        <i class="fa fa-arrow-left"></i> Back
+                    </a>
                 </div>       
-            </form>                  
+            </form>                                    
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </body>
 </html>

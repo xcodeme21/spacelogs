@@ -1,26 +1,45 @@
+document.addEventListener('DOMContentLoaded', function() {
+  const form = document.getElementById('login-form');
+  
+  form.addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevent the default form submission
 
-document.addEventListener('DOMContentLoaded', function () {
-    const errorElement = document.getElementById('error');
-    const sessionError = errorElement ? errorElement.innerHTML.trim() : '';
+      // Clear previous errors
+      const errorElement = document.getElementById('error');
+      if (errorElement) {
+          errorElement.textContent = '';
+      }
 
-    if (sessionError) {
-        setTimeout(() => {
-            fetch('/delete-sessions', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                errorElement.style.opacity = 0;
-                setTimeout(() => {
-                    errorElement.remove();
-                }, 500); 
-            })
-            .catch(error => {
-                console.error('Error clearing session:', error);
-            });
-        }, 2000); 
-    }
+      const formData = new FormData(form);
+
+      axios.post(form.action, formData)
+          .then(response => {
+            const data = response.data;
+              if (data.message === "Login successful") {
+                  window.location.href = '/dashboard'; 
+              } else {
+                  displayError("Failed to login.");
+              }
+          })
+          .catch(error => {
+              if (error.response && error.response.data.error) {
+                  displayError(error.response.data.error);
+              } else {
+                  displayError('An unexpected error occurred.');
+              }
+          });
+  });
+
+  function displayError(message) {
+      const errorElement = document.getElementById('error');
+      if (errorElement) {
+          errorElement.textContent = message;
+      } else {
+          const errorParagraph = document.createElement('p');
+          errorParagraph.id = 'error';
+          errorParagraph.className = 'text-sm text-danger mb-2 -mt-2';
+          errorParagraph.textContent = message;
+          form.querySelector('div').appendChild(errorParagraph);
+      }
+  }
 });
