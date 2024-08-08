@@ -7,9 +7,9 @@ const hashConfig = defineConfig({
     bcrypt: drivers.bcrypt({
       rounds: 10,
       saltSize: 16,
-      version: 98
-    })
-  }
+      version: 98,
+    }),
+  },
 })
 
 export default hashConfig

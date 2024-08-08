@@ -1,11 +1,11 @@
-import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
+import { fileURLToPath } from 'url'
+import { dirname, join } from 'path'
 import edge from 'edge.js'
 import env from '#start/env'
 import { edgeIconify } from 'edge-iconify'
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
 //const edge = new Edge({ cache: env.get('NODE_ENV') === 'production' })
 
 /**

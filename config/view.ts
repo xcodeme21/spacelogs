@@ -9,9 +9,7 @@ export default {
   | The location where views are stored.
   |
   */
-  locations: [
-    'resources/views'
-  ],
+  locations: ['resources/views'],
 
   /*
   |--------------------------------------------------------------------------

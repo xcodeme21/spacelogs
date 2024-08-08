@@ -9,7 +9,7 @@ import { DateTime } from 'luxon'
 export default class HomeController {
   public async index({ view }: HttpContext) {
     return view.render('pages/home', {
-      title: 'Home'
+      title: 'Home',
     })
   }
 
@@ -123,11 +123,11 @@ export default class HomeController {
       const tenMinutesAgo = DateTime.now().minus({ minutes: 10 }).toISO()
 
       const list = await LogApiPromo.query()
-      .select('id', 'status_code', 'response', 'duration')
-      .where('transaction_title', 'Simulate Promo Payment Level')
-      .andWhere('created_at', '>=', tenMinutesAgo)
-      .orderBy('id', 'desc')
-      .limit(100);
+        .select('id', 'status_code', 'response', 'duration')
+        .where('transaction_title', 'Simulate Promo Payment Level')
+        .andWhere('created_at', '>=', tenMinutesAgo)
+        .orderBy('id', 'desc')
+        .limit(100)
 
       const data = list.map((item) => ({
         status_code: item.status_code,
