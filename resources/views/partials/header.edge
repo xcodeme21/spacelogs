@@ -5,11 +5,11 @@
   
     <!-- Include Tailwind CSS -->
     @if (title === 'Home')
-        @vite(['resources/css/app.css', 'resources/js/home.js'])
+        @vite(['resources/css/app.css', 'resources/js/home.js', 'resources/js/app.js'])
     @elseif (title === 'e-Commerce')
-        @vite(['resources/css/app.css', 'resources/js/e-commerce.js'])
+        @vite(['resources/css/app.css', 'resources/js/e-commerce.js', 'resources/js/app.js'])
     @elseif (title === 'Dealer Portal')
-        @vite(['resources/css/app.css', 'resources/js/dealer-portal.js'])
+        @vite(['resources/css/app.css', 'resources/js/dealer-portal.js', 'resources/js/app.js'])
     @endif
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
 </head>
