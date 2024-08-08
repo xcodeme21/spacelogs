@@ -36,3 +36,4 @@ router.get('/hit-count', [ModalsController, 'getHitCount'])
 
 
 router.get('/login', [LoginController, 'index']).as('login')
+router.post('/login', [LoginController, 'index']).as('login.post')

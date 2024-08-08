@@ -42,7 +42,11 @@ const sessionConfig = defineConfig({
    */
   stores: {
     cookie: stores.cookie(),
-  },
+
+    file: stores.file({
+      location: app.tmpPath('sessions')
+    }),
+  }
 })
 
 export default sessionConfig
