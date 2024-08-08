@@ -3,9 +3,12 @@ document.addEventListener('DOMContentLoaded', function () {
   
   const modal = document.getElementById('myModal');
   const closeModalButton = document.getElementById('closeModal');
+  const overlay = document.createElement('div');
+  overlay.id = 'overlay';
+  document.body.appendChild(overlay);
 
-  // Fungsi untuk menampilkan modal
   const showModal = async (tableName, title, elementId, intervalDuration = 10000) => {
+    overlay.style.display = 'block';
     try {
       const response = await fetch(`/hit-count?transaction_title=${encodeURIComponent(title)}&table_name=${encodeURIComponent(tableName)}`);
       if (!response.ok) throw new Error('Network response was not ok');
@@ -60,6 +63,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const closeModal = () => {
     if (modal) {
       modal.classList.add('hidden');
+      overlay.style.display = 'none';
       if (fetchInterval) clearInterval(fetchInterval);
     }
   };
@@ -68,8 +72,8 @@ document.addEventListener('DOMContentLoaded', function () {
     closeModalButton.onclick = closeModal;
   }
 
-  window.onclick = (event) => {
-    if (event.target === modal) {
+  overlay.onclick = (event) => {
+    if (event.target === overlay) {
       closeModal();
     }
   };
