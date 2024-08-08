@@ -38,6 +38,9 @@ body {
   color: white;
 }
 
+.logo-login {
+  font-family: 'Viga', sans-serif;
+}
 .header-card {
   font-family: 'Viga', sans-serif;
 }

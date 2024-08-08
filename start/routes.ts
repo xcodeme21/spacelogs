@@ -12,6 +12,7 @@ import HomeController from '#controllers/home_controller'
 import EcommercesController from '#controllers/ecommerces_controller'
 import DealerPortalsController from '#controllers/dealer_portals_controller'
 import ModalsController from '#controllers/modals_controller'
+import LoginController from '#controllers/login_controller'
 
 router.get('/', [HomeController, 'index']).as('home')
 router.get('/api/oaa-queryimei', [HomeController, 'queryImei'])
@@ -32,3 +33,6 @@ router.get('/api/dealer-portal/outstanding-ar', [DealerPortalsController, 'outst
 
 router.get('/hit-count', [ModalsController, 'getHitCount'])
 // router.on('/').render('pages/home')
+
+
+router.get('/login', [LoginController, 'index']).as('login')
