@@ -126,11 +126,11 @@ document.addEventListener('DOMContentLoaded', function () {
   };
 
   const api = {
-    url_oaa_queryimei: 'http://localhost:3333/api/oaa-queryimei',
-    url_oaa_checkstock: 'http://localhost:3333/api/oaa-checkstock',
-    url_opp_item: 'http://localhost:3333/api/opp-item',
-    url_opp_checkout: 'http://localhost:3333/api/opp-checkout',
-    url_kafka: 'http://localhost:3333/api/kafka',
+    url_oaa_queryimei: '/api/oaa-queryimei',
+    url_oaa_checkstock: '/api/oaa-checkstock',
+    url_opp_item: '/api/opp-item',
+    url_opp_checkout: '/api/opp-checkout',
+    url_kafka: '/api/kafka',
   };
 
   for (const [key, value] of Object.entries(api)) {
