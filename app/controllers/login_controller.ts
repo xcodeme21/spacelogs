@@ -1,5 +1,6 @@
 import User from '#models/user'
 import type { HttpContext } from '@adonisjs/core/http'
+import hash from '@adonisjs/core/services/hash';
 
 export default class LoginController {
     public async index({ view }: HttpContext) {
@@ -8,25 +9,32 @@ export default class LoginController {
       })
     }
 
-    async post({ request, response, session, auth }: HttpContext) {
-      const { email, password } = request.only(['email', 'password'])
-  
-      const user = await User.findBy('email', email)
+    async login({ request, response, session }: HttpContext) {
+      const { email, password } = request.only(['email', 'password']);
+    
+      const user = await User.findBy('email', email);
+    
       if (!user) {
-          return response.redirect('back')
+        session.put('error', "Email not found.");
+        return response.redirect('login');
       }
-  
+    
+      const hashedPassword = user.password;
+    
+      console.log(password, hashedPassword)
       try {
-          await User.verifyCredentials(email, password)
-          await auth.use('web').login(user)
-          return response.redirect('/dashboard')
-      } catch (error) {
-          session.flash('notification', {
-            type: 'error',
-            message: 'Login Failed!'
-          })
-          
-          response.redirect().back()
+        const isPasswordValid = await hash.verify(password, hashedPassword);
+    
+        if (!isPasswordValid) {
+          session.put('error', "Incorrect password.");
+          return response.redirect('login');
+        }
+    
+        return response.redirect('/dashboard');
+      } catch (err) {
+        console.error('Error verifying password:', err);
+        session.put('error', "An error occurred.");
+        return response.redirect('login');
       }
     }
 }

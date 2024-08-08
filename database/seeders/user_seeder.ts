@@ -8,12 +8,12 @@ export default class extends BaseSeeder {
       {
         fullName: 'Agus Siswanto',
         email: 'agus.siswanto@erajaya.com',
-        password: await hash.use('scrypt').make('secret'),
+        password: await hash.use('bcrypt').make('secret'),
       },
       {
         fullName: 'Dealitha Winata',
         email: 'dealitha.winata@erajaya.com',
-        password: await hash.use('scrypt').make('secret'),
+        password: await hash.use('bcrypt').make('secret'),
       },
     ])
   }

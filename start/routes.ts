@@ -6,6 +6,7 @@
 | The routes file is used for defining the HTTP routes.
 |
 */
+"use strict";
 
 import router from '@adonisjs/core/services/router'
 import HomeController from '#controllers/home_controller'
@@ -13,6 +14,7 @@ import EcommercesController from '#controllers/ecommerces_controller'
 import DealerPortalsController from '#controllers/dealer_portals_controller'
 import ModalsController from '#controllers/modals_controller'
 import LoginController from '#controllers/login_controller'
+import SessionController from '#controllers/session_controller';
 
 router.get('/', [HomeController, 'index']).as('home')
 router.get('/api/oaa-queryimei', [HomeController, 'queryImei'])
@@ -36,4 +38,7 @@ router.get('/hit-count', [ModalsController, 'getHitCount'])
 
 
 router.get('/login', [LoginController, 'index']).as('login')
-router.post('/login', [LoginController, 'index']).as('login.post')
+router.post('/login', [LoginController, 'login']).as('login.post')
+
+
+router.get('/delete-sessions', [SessionController, 'delete']).as('delete-session')
