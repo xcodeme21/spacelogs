@@ -45,3 +45,13 @@ body {
 .sub-header-card {
   font-family: 'Roboto', sans-serif;
 }
+.loader {
+  display: none;
+  position: fixed;
+  z-index: 50;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 3em;
+  color: #000;
+}
