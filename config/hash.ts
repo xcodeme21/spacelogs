@@ -5,8 +5,7 @@ const hashConfig = defineConfig({
 
   list: {
     bcrypt: drivers.bcrypt({
-      rounds: 10,
-      saltSize: 16,
+      rounds: 12,
     })
   }
 })
