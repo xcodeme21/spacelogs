@@ -122,7 +122,7 @@ export default class HomeController {
     try {
       const tenMinutesAgo = DateTime.now().minus({ minutes: 10 }).toISO()
 
-      const list = await LogApiPos.query()
+      const list = await LogApiPromo.query()
       .select('id', 'status_code', 'response', 'duration')
       .where('transaction_title', 'Simulate Promo Payment Level')
       .andWhere('created_at', '>=', tenMinutesAgo)
@@ -142,7 +142,7 @@ export default class HomeController {
       const dataResponse = {
         data,
         avg: avgDuration,
-        table_name: 'log_api_pos',
+        table_name: 'log_api_promo',
         transaction_title: 'Simulate Promo Payment Level',
       }
 
